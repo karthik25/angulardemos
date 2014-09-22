@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+
+<div ng-app="ContactModule">
+    <div class="container">
+        <h4>Contact</h4>
+                
+        <form id="contactForm" ng-controller="ContactController">
+            <div class="alert alert-success" ng-show="submitted">
+                Your form has been sumitted!
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Your Name" class="form-control" ng-model="name" />
+                <br/>
+        
+                <input type="text" id="email" placeholder="Your Email" class="form-control" ng-model="email"/>
+                <br/>
+                
+                <select class="form-control" ng-model="type" ng-change="updatePlaceholder()"
+                        ng-options="item as item.display for item in contactTypes track by item.type">
+                </select>
+                <br/>
+        
+                <textarea id="comment" placeholder="{{ plctext }}" class="form-control" ng-model="comment"></textarea>
+                <br/><br/>
+        
+                <div class="pull-right">
+                    <input type="button" class="btn btn-primary" value="Submit Form" ng-click="submitForm()" />
+                    <a href="@Url.Action("Contact")" class="btn btn-danger">Cancel</a>
+                </div>
+                <br/><br/><br/>
+                <div class="alert alert-warning">
+                    Hello <strong>{{ name }}</strong>! Once you're done submit the form!!
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/Scripts/angular.min.js"></script>
+<script>
+    var module = angular.module("ContactModule", []);
+
+    module.controller("ContactController", function($scope) {
+        $scope.name = "";
+        $scope.email = "";
+        $scope.comment = "";
+        $scope.type = null;
+
+        $scope.plctext = "Your Comment";
+
+        $scope.submitted = false;
+        $scope.contactTypes = [{type: "comment", display: "Comment"}, {type: "suggestion", display: "Suggestion"}];
+
+        $scope.submitForm = function () {
+            $scope.submitted = true;
+        };
+
+        $scope.updatePlaceholder = function() {
+            if ($scope.type.type == "comment") {
+                $scope.plctext = "Your Comment";
+            } else {
+                $scope.plctext = "Your Suggestion";
+            }
+        };
+    });
+</script>

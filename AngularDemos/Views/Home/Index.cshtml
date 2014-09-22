@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home!";
+}
+
+<div class="container">
+    <h2>@Html.ActionLink("Home!", "Index")</h2>
+
+    <div ng-app="defaultModule">
+        <div ng-controller="mainController as main">
+            <form>
+                <input type="text" ng-model="main.message" />
+                <br />
+                <span>{{ main.message }}</span><br />
+                <select id="selItem" ng-model="main.selectedItem"
+                    ng-options="item as item.name for item in main.items track by item.id">
+                </select>
+                <br />
+            </form>
+            <a href="#ask">Ask a Question</a> | <a href="#load">Load a Table</a> | <a href="#elements">Load Elements</a>
+        </div>
+        <br />
+        <br />
+        <button class="btn btn-danger" ng-click="count = count + 1" ng-init="count=0">
+            Increment
+        </button>
+        <span>count: {{count}}
+        </span>
+        <br /><br/>
+        <div ng-view>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script>
+    var module = angular.module("defaultModule", ['ngRoute']);
+
+    module.controller("mainController", function () {
+        var model = this;
+
+        model.message = "Hello World!";
+        model.items = [
+                        { id: 1, name: 'Foo' },
+                        { id: 2, name: 'Bar' }];
+        model.selectedItem = "";
+    });
+
+    module.controller("AskController", function () {
+
+    });
+
+    module.controller('LoadController', function () {
+        var model = this;
+
+        model.items = [{ id: 1, name: "Karthik" }, { id: 2, name: "Vaishu" }];
+    });
+
+    module.controller('formController', function($scope) {
+        $scope.master = { firstName: "John", lastName: "Doe" };
+        $scope.reset = function () {
+            $scope.user = angular.copy($scope.master);
+        };
+        $scope.reset();
+    });
+
+    module.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/ask', {
+            templateUrl: '/templates/ask.html',
+            controller: 'AskController'
+        }).when('/load', {
+            templateUrl: '/templates/load.html',
+            controller: 'LoadController'
+        }).when('/elements', {
+            templateUrl: '/templates/elements.html',
+            controller: 'formController'
+        });
+    }]);
+</script>
