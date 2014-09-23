@@ -14,7 +14,7 @@
 
 <div class="container">
     <div ng-app="HelperModules">
-        <div ng-controller="ClientListController">
+        <div ng-controller="ListController">
             <div class="dropdown">
                 <a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#">Clients <b class="caret"></b></a>
                 <ul id="clientList" class="dropdown-menu dropdown-menu-form" role="menu">
@@ -26,6 +26,19 @@
                     </li>                    
                 </ul>
             </div>
+            <br/>
+            <div class="dropdown">
+                <a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#">Packages <b class="caret"></b></a>
+                <ul id="packageList" class="dropdown-menu dropdown-menu-form" role="menu">
+                    <li ng-repeat="package in packages">
+                        <label class="checkbox" data-id="{{ package.Id }}">
+                            <input type="checkbox" />
+                            <span>{{ package.Name }}</span>
+                        </label>
+                    </li>                    
+                </ul>
+            </div>
+
             <br/>
             <input type="button" name="btnGo" value="Go!" id="btnGo" class="btn btn-success" />
             <br/><br/>
@@ -39,11 +52,16 @@
 <script>
     var module = angular.module("HelperModules", []);
 
-    module.controller("ClientListController", function ($scope, $http) {
+    module.controller("ListController", function ($scope, $http) {
         $scope.clients = [];
+        $scope.packages = [];
 
         $http.get('/api/basic/clients').success(function (data) {
             $scope.clients = data;
+        });
+        
+        $http.get('/api/basic/packages').success(function (data) {
+            $scope.packages = data;
         });
 
         $scope.getValues = function() {
@@ -64,15 +82,20 @@
 
             $('#btnGo').on('click', function () {
                 var chosenIds = [];
-                var checkboxes = $('#clientList').find('input:checkbox');
+                var chosenPackages = [];
+                var checkboxes = $('#clientList').find('input:checkbox:checked');
+                var pkgCheckboxes = $('#packageList').find('input:checkbox:checked');
                 $.each(checkboxes, function () {
                     var item = this;
-                    if ($(item).is(':checked')) {
-                        var id = $(item).parent().data('id');
-                        chosenIds.push(id);                        
-                    }
-                    $('#results').html(chosenIds.join(', '));
+                    var id = $(item).parent().data('id');
+                    chosenIds.push(id);                        
                 });
+                $.each(pkgCheckboxes, function () {
+                    var item = this;
+                    var id = $(item).parent().data('id');
+                    chosenPackages.push(id);
+                });
+                $('#results').html(chosenIds.join(', ') + " : " + chosenPackages.join(', '));
             });
         })
 </script>
