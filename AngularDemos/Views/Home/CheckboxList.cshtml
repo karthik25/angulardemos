@@ -17,15 +17,19 @@
         <div ng-controller="ClientListController">
             <div class="dropdown">
                 <a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#">Clients <b class="caret"></b></a>
-                <ul class="dropdown-menu dropdown-menu-form" role="menu">
+                <ul id="clientList" class="dropdown-menu dropdown-menu-form" role="menu">
                     <li ng-repeat="client in clients">
-                        <label class="checkbox">
+                        <label class="checkbox" data-id="{{ client.Id }}">
                             <input type="checkbox" />
-                            {{ client.Name }}
+                            <span>{{ client.Name }}</span>
                         </label>
                     </li>                    
                 </ul>
             </div>
+            <br/>
+            <input type="button" name="btnGo" value="Go!" id="btnGo" class="btn btn-success" />
+            <br/><br/>
+            <textarea class="form-control" id="results"></textarea>
         </div>
     </div>
 </div>
@@ -41,6 +45,10 @@
         $http.get('/api/basic/clients').success(function (data) {
             $scope.clients = data;
         });
+
+        $scope.getValues = function() {
+            alert('clicked');
+        };
     });
 </script>
 
@@ -52,6 +60,19 @@
                 if ($(this).hasClass('dropdown-menu-form')) {
                     e.stopPropagation();
                 }
+            });
+
+            $('#btnGo').on('click', function () {
+                var chosenIds = [];
+                var checkboxes = $('#clientList').find('input:checkbox');
+                $.each(checkboxes, function () {
+                    var item = this;
+                    if ($(item).is(':checked')) {
+                        var id = $(item).parent().data('id');
+                        chosenIds.push(id);                        
+                    }
+                    $('#results').html(chosenIds.join(', '));
+                });
             });
         })
 </script>
