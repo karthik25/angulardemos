@@ -13,5 +13,10 @@ namespace AngularDemos.Controllers
         {
             return View();
         }
+
+        public ActionResult CheckboxList()
+        {
+            return View();
+        }
     }
 }
