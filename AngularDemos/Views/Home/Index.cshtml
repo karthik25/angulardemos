@@ -12,7 +12,7 @@
                 <br />
                 <span>{{ main.message }}</span><br />
                 <select id="selItem" ng-model="main.selectedItem"
-                    ng-options="item as item.name for item in main.items track by item.id">
+                        ng-options="item as item.name for item in main.items track by item.id">
                 </select>
                 <br />
             </form>
@@ -28,6 +28,16 @@
         <br /><br/>
         <div ng-view>
         </div>
+    </div>
+    
+    <div id="loaders">
+        @for (var i = 0; i < 5; i++)
+        {
+            <div>
+                <img id="@string.Format("loader{0}", i)" src="@Url.Content("~/Content/images/loader.gif")" alt=""/>
+            </div>
+            <br/><br/>
+        }
     </div>
 </div>
 
