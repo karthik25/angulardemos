@@ -158,6 +158,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="templates\ask.html" />
     <Content Include="templates\elements.html" />
@@ -177,6 +178,7 @@
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\CheckboxList.cshtml" />
+    <Content Include="Views\Home\Mustache.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

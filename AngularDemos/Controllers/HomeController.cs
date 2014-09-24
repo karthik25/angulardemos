@@ -18,5 +18,10 @@ namespace AngularDemos.Controllers
         {
             return View();
         }
+
+        public ActionResult Mustache()
+        {
+            return View();
+        }
     }
 }
