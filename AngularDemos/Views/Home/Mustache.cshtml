@@ -9,18 +9,21 @@
             <div id="{{parentId}}">
                 <div class="row">
                     <div class="col-md-6">
-                        <table class="table" id="{{ tableId }}">
+                        <table class="table table-striped" id="{{ tableId }}">
                             <tr>
                                 <th>Col 1</th><th>Col 2</th>
                             </tr>
-                            <tr>
-                                <td>Content</td><td>Text</td>
-                            </tr>
+                            {{#tData}}
+                                <tr>
+                                    <td>{{field1}}</td>
+                                    <td>{{field2}}</td>
+                                </tr>
+                            {{/tData}}
                         </table>    
                     </div>
                     <div class="col-md-6">
                         <div id="{{ chartId }}">
-                            Some chart content
+                            Some content
                         </div>
                     </div>
                 </div>
@@ -62,8 +65,8 @@
         var rendered = Mustache.render(template, {
             entries:
             [
-                { parentId: "pId1", tableId: "tId1", chartId: "cId1" },
-                { parentId: "pId2", tableId: "tId2", chartId: "cId2" }
+                { parentId: "pId1", tableId: "tId1", chartId: "cId1", tData: [{ field1: 'data 1', field2: 'data 2' }, { field1: 'data 3', field2: 'data 4' }] },
+                { parentId: "pId2", tableId: "tId2", chartId: "cId2", tData: [{ field1: 'more 1', field2: 'more 2' }, { field1: 'more 3', field2: 'more 4' }] }
             ]
         });
         $('#mustache2').html(rendered);
