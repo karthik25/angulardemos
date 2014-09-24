@@ -2,5 +2,70 @@
     ViewBag.Title = "Mustache";
 }
 
-<h2>Mustache</h2>
+<script id="template" type="x-tmpl-mustache">
 
+    <div id="selection_content">
+        {{#entries}}
+            <div id="{{parentId}}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table" id="{{ tableId }}">
+                            <tr>
+                                <th>Col 1</th><th>Col 2</th>
+                            </tr>
+                            <tr>
+                                <td>Content</td><td>Text</td>
+                            </tr>
+                        </table>    
+                    </div>
+                    <div class="col-md-6">
+                        <div id="{{ chartId }}">
+                            Some chart content
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/entries}}
+    </div>
+
+</script>
+
+<div class="container">
+    <h2>Mustache</h2>
+
+    <div id="mustache1">
+    
+    </div>
+    <br/><br/>
+    <div id="mustache2">
+    
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script src="~/Scripts/mustache.js"></script>
+<script>
+    $(function() {
+        var view = {
+            title: "Joe",
+            calc: function () {
+                return 2 + 4;
+            }
+        };
+
+        var output = Mustache.render("{{title}} spends {{calc}}", view);
+
+        $('#mustache1').html(output);
+
+        var template = $('#template').html();
+        Mustache.parse(template);
+        var rendered = Mustache.render(template, {
+            entries:
+            [
+                { parentId: "pId1", tableId: "tId1", chartId: "cId1" },
+                { parentId: "pId2", tableId: "tId2", chartId: "cId2" }
+            ]
+        });
+        $('#mustache2').html(rendered);
+    })
+</script>
