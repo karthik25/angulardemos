@@ -162,6 +162,7 @@
     <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="templates\ask.html" />
+    <Content Include="templates\contact.html" />
     <Content Include="templates\elements.html" />
     <Content Include="templates\load.html" />
     <Content Include="Web.config" />
@@ -180,6 +181,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\CheckboxList.cshtml" />
     <Content Include="Views\Home\Mustache.cshtml" />
+    <Content Include="Views\Home\Tutorial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

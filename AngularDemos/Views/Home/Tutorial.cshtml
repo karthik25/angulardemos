@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Tutorial";
+}
+
+<div class="container">
+    <h2>Tutorial</h2>
+
+    <div ng-app="BasicModule">
+        <a href="#contact">Contact</a>
+        <br/><br/>
+        <div ng-view>
+        
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script>
+    var module = angular.module("BasicModule", ['ngRoute']);
+
+    module.controller("ContactController", function($http) {
+
+    });
+
+    module.config(["$routeProvider", function($routeProvider) {
+        $routeProvider.when('/contact', {
+            templateUrl: '/templates/contact.html',
+            controller: 'ContactController'
+        });
+    }]);
+</script>

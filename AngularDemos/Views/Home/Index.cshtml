@@ -29,16 +29,6 @@
         <div ng-view>
         </div>
     </div>
-    
-    <div id="loaders">
-        @for (var i = 0; i < 5; i++)
-        {
-            <div>
-                <img id="@string.Format("loader{0}", i)" src="@Url.Content("~/Content/images/loader.gif")" alt=""/>
-            </div>
-            <br/><br/>
-        }
-    </div>
 </div>
 
 <script src="~/Scripts/angular.js"></script>

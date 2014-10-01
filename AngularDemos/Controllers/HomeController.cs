@@ -9,6 +9,11 @@ namespace AngularDemos.Controllers
             return View();
         }
 
+        public ActionResult Tutorial()
+        {
+            return View();
+        }
+
         public ActionResult Contact()
         {
             return View();
