@@ -28,5 +28,15 @@ namespace AngularDemos.Controllers
         {
             return View();
         }
+
+        public ActionResult Validations()
+        {
+            return View();
+        }
+
+        public ActionResult Carousel()
+        {
+            return View();
+        }
     }
 }

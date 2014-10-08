@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Validations";
+}
+
+<script src="~/Scripts/angular.js"></script>
+<script>
+    function validateCtrl($scope, $http) {
+        $scope.user = "";
+        $scope.email = "";
+
+        $scope.submitted = false;
+        $scope.showImg = false;
+
+        $scope.items = [];
+
+        $scope.submitForm = function() {
+            if ($scope.myForm.$valid) {
+                $scope.showImg = true;
+                $http.get('/api/basic/list1', { cache: true }).success(function (data) {
+                    $scope.items = data;
+                    $scope.showImg = false;
+                });
+            } else {
+                $scope.myForm.submitted = true;
+            }
+        };
+    }
+</script>
+
+<div class="container">
+    <h2>Validations</h2>
+
+    <form ng-cloak ng-app="" ng-controller="validateCtrl"
+          name="myForm" novalidate ng-submit="submitForm()">
+
+        <p>
+            Username:<br>
+                     <input type="text" name="user" ng-model="user" class="form-control" required>
+                     <span style="color: red" ng-show="myForm.user.$dirty && myForm.user.$invalid && myForm.submitted">
+                         <span ng-show="myForm.user.$error.required">Username is required.</span>
+                     </span>
+        </p>
+
+        <p>
+            Email:<br>
+                  <input type="email" name="email" ng-model="email" class="form-control" required>
+                  <span style="color: red" ng-show="myForm.email.$dirty && myForm.email.$invalid && myForm.submitted">
+                      <span ng-show="myForm.email.$error.required">Email is required.</span>
+                      <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+                  </span>
+        </p>
+        <br/>
+        <p>
+            <input type="submit" class="btn btn-success">
+            &nbsp;&nbsp;&nbsp;
+            <img src="@Url.Content("~/Content/images/loader.gif")" ng-show="showImg"/>
+        </p>
+        
+        <br/>
+        
+        <ul>
+           <li ng-repeat="item in items">{{ item.Name }}</li> 
+        </ul>
+    </form>
+    <br/>
+</div>

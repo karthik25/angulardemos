@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Http;
 using AngularDemos.Models;
 
@@ -10,6 +11,7 @@ namespace AngularDemos.Controllers
         [HttpGet]
         public List<CheckBoxEntry> List1()
         {
+            Thread.Sleep(2000);
             return Enumerable.Range(1, 20).Select(e => new CheckBoxEntry { Id = e, Name = "Citem " + e }).ToList();
         }
 

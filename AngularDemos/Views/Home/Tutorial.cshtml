@@ -19,8 +19,14 @@
 <script>
     var module = angular.module("BasicModule", ['ngRoute']);
 
-    module.controller("ContactController", function($http) {
+    module.controller("ContactController", function($scope, $http) {
+        $scope.name = "";
+        $scope.email = "";
+        $scope.content = "";
 
+        $scope.submitForm = function() {
+            alert('Submitting the form ' + $scope.content);
+        };
     });
 
     module.config(["$routeProvider", function($routeProvider) {
