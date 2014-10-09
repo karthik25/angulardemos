@@ -137,6 +137,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\carousel.css" />
     <Content Include="Content\images\carousel\Gutman_island.jpg" />
+    <Content Include="Content\images\carousel\IMG_3773.jpg" />
+    <Content Include="Content\images\carousel\urbex-ppc-030.jpg" />
     <Content Include="Content\images\loader.gif" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
