@@ -38,5 +38,15 @@ namespace AngularDemos.Controllers
         {
             return View();
         }
+
+        public ActionResult Copy()
+        {
+            return View();
+        }
+
+        public ActionResult Factories()
+        {
+            return View();
+        }
     }
 }

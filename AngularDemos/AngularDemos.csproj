@@ -164,6 +164,9 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\mustache.js" />
+    <Content Include="Scripts\ZeroClipboard.js" />
+    <Content Include="Scripts\ZeroClipboard.min.js" />
+    <Content Include="Scripts\ZeroClipboard.swf" />
     <Content Include="Scripts\_references.js" />
     <Content Include="templates\ask.html" />
     <Content Include="templates\contact.html" />
@@ -188,6 +191,8 @@
     <Content Include="Views\Home\Tutorial.cshtml" />
     <Content Include="Views\Home\Validations.cshtml" />
     <Content Include="Views\Home\Carousel.cshtml" />
+    <Content Include="Views\Home\Copy.cshtml" />
+    <Content Include="Views\Home\Factories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

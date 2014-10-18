@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Factories";
+}
+
+<div class="container">
+    <h2>Factories</h2>
+    
+    <div ng-app="MainModule">
+        <div ng-controller="MainController">
+            <div ng-repeat="d in data">
+                {{ d.Name }}
+                <hr/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/angular.js"></script>
+<script>
+    var module = angular.module("MainModule", []);
+
+    module.controller("MainController", function($scope, $http, myFactory) {
+        $scope.data = [];
+
+        myFactory.getResults().then(function (data) {
+            $scope.data = data;
+        }, function(data) {
+            alert(data);
+        });
+    });
+
+    module.factory("myFactory", function($http, $q) {
+        var service = {};
+        var url = '/api/basic/list1';
+
+        service.getResults = function() {
+            var deferred = $q.defer();
+            $http({ url: url, method: 'GET' }).success(function (data) {
+                deferred.resolve(data);
+            }).error(function (data) {
+                deferred.reject('An error has occurred ' + data);
+            });
+            return deferred.promise;
+        };
+
+        return service;
+    });
+</script>
