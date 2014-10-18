@@ -5,8 +5,11 @@
 <div class="container">
     <h2>Factories</h2>
     
-    <div ng-app="MainModule">
+    <div ng-app="MainModule" ng-cloak>
         <div ng-controller="MainController">
+            <div ng-show="busy">
+                <img src="@Url.Content("~/Content/images/loader.gif")" alt=""/> loading...
+            </div>
             <div ng-repeat="d in data">
                 {{ d.Name }}
                 <hr/>
@@ -21,9 +24,11 @@
 
     module.controller("MainController", function($scope, $http, myFactory) {
         $scope.data = [];
+        $scope.busy = true;
 
         myFactory.getResults().then(function (data) {
             $scope.data = data;
+            $scope.busy = false;
         }, function(data) {
             alert(data);
         });
