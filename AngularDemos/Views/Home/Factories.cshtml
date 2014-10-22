@@ -22,9 +22,16 @@
 <script>
     var module = angular.module("MainModule", []);
 
-    module.controller("MainController", function($scope, $http, myFactory) {
+    module.controller("MainController", function($scope, $http, $log, $location, myFactory) {
         $scope.data = [];
         $scope.busy = true;
+
+        $log.log('Abs url: ' + $location.absUrl());
+        $log.log('Url: ' + $location.url());
+        $log.log('Port: ' + $location.port());
+        $log.log('Protocol: ' + $location.protocol());
+        $log.log('Host: ' + $location.host());
+        $log.log('Path: ' + $location.path());
 
         myFactory.getResults().then(function (data) {
             $scope.data = data;

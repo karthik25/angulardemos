@@ -48,5 +48,15 @@ namespace AngularDemos.Controllers
         {
             return View();
         }
+
+        public ActionResult Image()
+        {
+            return View();
+        }
+
+        public ActionResult Paging()
+        {
+            return View();
+        }
     }
 }
