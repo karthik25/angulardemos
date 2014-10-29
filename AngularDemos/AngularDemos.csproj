@@ -199,6 +199,8 @@
     <Content Include="Views\Home\Factories.cshtml" />
     <Content Include="Views\Home\Image.cshtml" />
     <Content Include="Views\Home\Paging.cshtml" />
+    <Content Include="Views\Home\Paging2.cshtml" />
+    <Content Include="Views\Home\Paging3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html ng-app="todos">
+
+<head>
+    <link data-require="bootstrap-css@2.3.2" data-semver="2.3.2" rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
+    <script data-require="angular.js@1.1.5" data-semver="1.1.5" src="http://code.angularjs.org/1.1.5/angular.min.js"></script>
+    <script data-require="angular-ui-bootstrap@0.3.0" data-semver="0.3.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.min.js"></script>
+    <style type="text/css">
+        .pagination a {
+            cursor: pointer
+        }
+    </style>
+    <script>
+        var todos = angular.module('todos', ['ui.bootstrap']);
+
+        todos.controller('TodoController', function ($scope, $log) {
+            $scope.filteredTodos = []
+           , $scope.currentPage = 1
+           , $scope.numPerPage = 10
+           , $scope.maxSize = 5
+           , $scope.sText = "";
+
+            /* ak modified */
+            $scope.makeTodos = function (text) {
+                $scope.todos = [];
+                for (i = 1; i <= 1000; i++) {
+                    var todo = 'todo ' + i;
+                    if (text != null && text != '') {
+                        if (todo.indexOf(text) >= 0) {
+                            $scope.todos.push({ text: todo, done: false });
+                        }
+                    }
+                    else {
+                        $scope.todos.push({ text: todo, done: false });
+                    }
+                }
+            };
+
+            /* ak */
+            $scope.updateResults = function () {
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+                , end = begin + $scope.numPerPage;
+
+                $scope.filteredTodos = $scope.todos.slice(begin, end);
+            };
+
+            $scope.makeTodos();
+
+            $scope.numPages = function () {
+                return Math.ceil($scope.todos.length / $scope.numPerPage);
+            };
+
+            /* ak modified */
+            $scope.$watch('currentPage + numPerPage', function () {
+                $scope.updateResults();
+            });
+
+            /* ak */
+            $scope.$watch('sText', function () {
+                var text = $scope.sText.length > 3 ? $scope.sText : null;
+                $scope.makeTodos(text);
+                $scope.updateResults();
+            });
+        });
+
+    </script>
+</head>
+
+<body ng-controller="TodoController">
+    <h1>Todos</h1>
+    <h4>{{todos.length}} remain</h4>
+    <!-- Search: <input ng-model="searchText"><br/> -->
+    Search:
+    <input ng-model="sText">
+    <ul>
+        <li ng-repeat="todo in filteredTodos">{{todo.text}}</li>
+    </ul>
+    <div data-pagination="" data-num-pages="numPages()"
+        data-current-page="currentPage" data-max-size="maxSize"
+        data-boundary-links="true">
+    </div>
+</body>
+
+</html>
