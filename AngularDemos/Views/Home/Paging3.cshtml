@@ -6,8 +6,9 @@
     <script data-require="angular.js@1.1.5" data-semver="1.1.5" src="http://code.angularjs.org/1.1.5/angular.min.js"></script>
     <script data-require="angular-ui-bootstrap@0.3.0" data-semver="0.3.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.min.js"></script>
     <style type="text/css">
-        .pagination a {
-            cursor: pointer
+        .pagination a
+        {
+            cursor: pointer;
         }
     </style>
     <script>
@@ -27,11 +28,11 @@
                     var todo = 'todo ' + i;
                     if (text != null && text != '') {
                         if (todo.indexOf(text) >= 0) {
-                            $scope.todos.push({ text: todo, done: false });
+                            $scope.todos.push({ id: i, text: todo, done: false });
                         }
                     }
                     else {
-                        $scope.todos.push({ text: todo, done: false });
+                        $scope.todos.push({ id: i, text: todo, done: false });
                     }
                 }
             };
@@ -67,18 +68,27 @@
 </head>
 
 <body ng-controller="TodoController">
-    <h1>Todos</h1>
-    <h4>{{todos.length}} remain</h4>
-    <!-- Search: <input ng-model="searchText"><br/> -->
-    Search:
-    <input ng-model="sText">
-    <ul>
-        <li ng-repeat="todo in filteredTodos">{{todo.text}}</li>
-    </ul>
-    <div data-pagination="" data-num-pages="numPages()"
-        data-current-page="currentPage" data-max-size="maxSize"
-        data-boundary-links="true">
+    <div class="container">
+        <h1>Todos</h1>
+        <h4>{{todos.length}} remain</h4>
+        <!-- Search: <input ng-model="searchText"><br/> -->
+        Search:
+        <input ng-model="sText">
+        <br /><br/>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Item</th>
+            </tr>
+            <tr ng-repeat="todo in filteredTodos">
+                <td>{{todo.id}}</td>
+                <td>{{todo.text}}</td>
+            </tr>
+        </table>
+        <div data-pagination="" data-num-pages="numPages()"
+             data-current-page="currentPage" data-max-size="maxSize"
+             data-boundary-links="true">
+        </div>
     </div>
 </body>
-
 </html>
