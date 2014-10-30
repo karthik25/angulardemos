@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app="todos">
+<html ng-app="users">
 
 <head>
     <link data-require="bootstrap-css@2.3.2" data-semver="2.3.2" rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
@@ -12,76 +12,82 @@
         }
     </style>
     <script>
-        var todos = angular.module('todos', ['ui.bootstrap']);
+        var users = angular.module('users', ['ui.bootstrap']);
 
-        todos.controller('TodoController', function ($scope, $log) {
-            $scope.filteredTodos = []
-           , $scope.currentPage = 1
-           , $scope.numPerPage = 10
-           , $scope.maxSize = 5
-           , $scope.sText = "";
+        users.controller('UsersController', function ($scope) {
+            $scope.filteredUsers = [], $scope.currentPage = 1, $scope.numPerPage = 10,
+            $scope.maxSize = 5, $scope.sText = "";
+            
+            var firstNames = ["John", "Jane", "Mark", "Peter", "Mark", "Don", "Kenneth", "Gary", "Frank", "Henry", "Gale", "Sam", "Roy", "Walter", "David"];
+            var lastNames = ["Smith", "White", "King", "Hill", "Lopez", "Young", "Turner", "Evans", "Cook", "Morris", "Cox", "James", "Foster", "Hayes", "Cole"];
 
-            /* ak modified */
-            $scope.makeTodos = function (text) {
-                $scope.todos = [];
-                for (i = 1; i <= 1000; i++) {
-                    var todo = 'todo ' + i;
+            $scope.getRandomNo = function(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            };
+
+            $scope.makeUsers = function () {
+                $scope.allUsers = [];
+                for (var i = 1; i <= 1000; i++) {
+                    var r = $scope.getRandomNo(0, 14);
+                    var name = lastNames[r] + ', ' + firstNames[r];
+                    var email = firstNames[r] + i + '@@mail.com';
+
+                    var text = $scope.sText.toLowerCase();
                     if (text != null && text != '') {
-                        if (todo.indexOf(text) >= 0) {
-                            $scope.todos.push({ id: i, text: todo, done: false });
+                        if (name.toLowerCase().indexOf(text) >= 0 || email.toLowerCase().indexOf(text) >= 0) {
+                            $scope.allUsers.push({ id: i, text: name, email: email, done: false });
                         }
                     }
                     else {
-                        $scope.todos.push({ id: i, text: todo, done: false });
+                        $scope.allUsers.push({ id: i, text: name, email: email, done: false });
                     }
                 }
             };
 
-            /* ak */
             $scope.updateResults = function () {
-                var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-                , end = begin + $scope.numPerPage;
+                var begin = (($scope.currentPage - 1) * $scope.numPerPage), end = begin + $scope.numPerPage;
 
-                $scope.filteredTodos = $scope.todos.slice(begin, end);
+                $scope.filteredUsers = $scope.allUsers.slice(begin, end);
             };
 
-            $scope.makeTodos();
+            $scope.makeUsers();
 
             $scope.numPages = function () {
-                return Math.ceil($scope.todos.length / $scope.numPerPage);
+                return Math.ceil($scope.allUsers.length / $scope.numPerPage);
             };
 
-            /* ak modified */
             $scope.$watch('currentPage + numPerPage', function () {
                 $scope.updateResults();
             });
-
-            /* ak */
+            
             $scope.$watch('sText', function () {
-                var text = $scope.sText.length > 3 ? $scope.sText : null;
-                $scope.makeTodos(text);
-                $scope.updateResults();
+                if ($scope.sText.length == 0 || $scope.sText.length > 2) {
+                    $scope.makeUsers();
+                    $scope.updateResults();
+                }
             });
         });
 
     </script>
 </head>
 
-<body ng-controller="TodoController">
+<body ng-controller="UsersController">
     <div class="container">
-        <h1>Todos</h1>
-        <h4>{{todos.length}} remain</h4>
+        <h1>Users</h1>
+        <h4>Listing {{allUsers.length}} users</h4>
         <br />
-        <input ng-model="sText" class="form-control" style="width: 200px" placeholder="Search Term" />
+        <input ng-model="sText" class="form-control" style="width: 200px" placeholder="Search Term" />&nbsp;<small>type atleast 3 characters to start searching</small>
         <br /><br/>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
-                <th>Item</th>
+                <th>Name</th>
+                <th>Email</th>
             </tr>
-            <tr ng-repeat="todo in filteredTodos">
-                <td>{{todo.id}}</td>
-                <td>{{todo.text}}</td>
+            <tr ng-repeat="user in filteredUsers">
+                <td>{{user.id}}</td>
+                <td>{{user.text}}</td>
+                <td>{{user.email}}</td>
             </tr>
         </table>
         <div data-pagination="" data-num-pages="numPages()"
